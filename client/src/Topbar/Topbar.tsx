@@ -12,14 +12,18 @@ export default function Topbar() {
       </div>
       <div className="navigation-links">
         <div className="homepage-link">
-          <a href="#">Home</a>
-          <a href="#">Timeline</a>
+          <a className="links home-link" href="#">
+            Home
+          </a>
+          <a className="links timeline-link" href="#">
+            Timeline
+          </a>
         </div>
       </div>
       <div className="icons-links">
-        <Person />
-        <Message />
-        <Notifications />
+        <Person titleAccess="Profile" />
+        <Message titleAccess="Messenger" />
+        <Notifications titleAccess="Notifications" />
       </div>
       <div className="right-side">
         <div className="user-profile">
