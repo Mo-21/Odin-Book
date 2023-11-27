@@ -1,0 +1,80 @@
+@font-face {
+  font-family: "Roboto";
+  src: url(../assets/Roboto-Regular.ttf);
+}
+
+.topbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #e3b261;
+  padding: 10px 20px;
+  color: white;
+  font-family: Roboto, sans-serif;
+}
+
+.left-side,
+.right-side {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.left-side {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.search-bar {
+  flex-grow: 1;
+  margin: 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 5px;
+  border: none;
+  border-radius: 0 5px 5px 0;
+}
+
+.search-icon {
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  color: black;
+  border-radius: 5px 0 0 5px;
+  height: 100%;
+  width: 25px;
+  padding: 3px;
+}
+
+.navigation-links {
+  display: none;
+}
+
+.icons-links {
+  display: flex;
+  cursor: pointer;
+  gap: 10px;
+}
+
+.profile-picture {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  object-fit: cover;
+  margin-left: 10px;
+}
+
+@media (min-width: 700px) {
+  .navigation-links {
+    display: flex;
+    gap: 20px;
+  }
+  .left-side {
+    font-size: 2rem;
+  }
+}
