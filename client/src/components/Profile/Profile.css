@@ -1,0 +1,164 @@
+.profilePage-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.users-profile-info {
+  width: 100%;
+  position: relative;
+}
+
+.cover-picture {
+  width: 100%;
+}
+
+.cover-picture-img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  max-height: 400px;
+}
+
+.profile-picture-profile {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -70%);
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.profile-picture-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.user-personal-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 75px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  font-size: 2rem;
+}
+
+.user-name {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.user-activity {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  background-color: #333;
+  color: #ddd;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.user-activity-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.users-profile-activity {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 20px;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.user-posts {
+  flex: 1;
+  margin: 0 20px;
+}
+
+.users-basic-info {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.information {
+  line-height: 25px;
+  font-size: 1.3rem;
+  background-color: #333;
+  color: #ddd;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 16px 6px rgba(0, 0, 0, 0.28);
+}
+
+.users-followers {
+  line-height: 25px;
+  font-size: 1.3rem;
+  background-color: #333;
+  color: #ddd;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 16px 6px rgba(0, 0, 0, 0.28);
+}
+
+.user-follower {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.follower-picture img {
+  object-fit: cover;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+
+@media (max-width: 700px) {
+  .users-profile-activity {
+    flex-direction: column;
+    padding: 10px;
+  }
+  .user-posts {
+    margin: 20px 0;
+  }
+  .profile-picture-profile {
+    width: 150px;
+    height: 150px;
+    top: 60%;
+  }
+  .user-info {
+    font-size: 1.6rem;
+  }
+  .user-personal-info {
+    margin-top: 20px;
+  }
+  .users-basic-info,
+  .users-followers {
+    width: 100%;
+  }
+  .information {
+    display: none;
+  }
+  .user-follower {
+    display: none;
+  }
+}
