@@ -27,6 +27,30 @@ html {
   align-items: center;
   overflow-y: auto;
   overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.feed:hover {
+  /* For Firefox */
+  scrollbar-color: #888 #f2f2f2; /* show scrollbar when hovering */
+}
+
+/* For Webkit browsers */
+.feed::-webkit-scrollbar {
+  width: 2px;
+}
+
+.feed::-webkit-scrollbar-track {
+  background: #f2f2f2;
+}
+
+.feed::-webkit-scrollbar-thumb {
+  background-color: transparent; /* make scrollbar transparent */
+}
+
+.feed:hover::-webkit-scrollbar-thumb {
+  background-color: #888; /* show scrollbar when hovering */
 }
 
 .rightbar {
