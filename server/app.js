@@ -11,18 +11,18 @@ const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt");
 const session = require("express-session");
 
-const userRoute = require("./routes/users");
-const authRoute = require("./routes/auth");
-
 const { User } = require("./models/User");
+const Post = require("./models/Post");
 
 const app = express();
 
+//MongoDB connection
 mongoose.connect(process.env.DATABASE_URL);
 const db = mongoose.connection;
 db.on("error", (error) => console.error(error));
 db.once("open", () => console.log("Connected to database"));
 
+// Passport config
 passport.use(
   new LocalStrategy(
     { usernameField: "email", passwordField: "password" },
@@ -74,9 +74,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 
-app.use("/api/users", userRoute);
-app.use("/api/auth", authRoute);
+// Routes
+app.use("/api/users", require("./routes/users"));
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/posts", require("./routes/posts"));
 
+// Serve static assets in production
 app.listen(process.env.PORT || 3000, () => {
   console.log(`Listening on port ${process.env.PORT || 3000}`);
 });
