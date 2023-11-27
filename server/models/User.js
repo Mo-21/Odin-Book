@@ -28,7 +28,7 @@ const userSchema = new Schema(
       type: String,
       default: "",
     },
-    coverPicture: {
+    profilePicture: {
       type: String,
       default: "",
     },
@@ -47,14 +47,17 @@ const userSchema = new Schema(
     bio: {
       type: String,
       max: 255,
+      default: "",
     },
     city: {
       type: String,
       max: 50,
+      default: "",
     },
     from: {
       type: String,
       max: 50,
+      default: "",
     },
     relationship: {
       type: Number,
