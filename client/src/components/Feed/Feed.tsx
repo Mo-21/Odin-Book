@@ -1,5 +1,5 @@
-import Post from "../postInput/Post";
-import Timeline from "../timeline/Timeline";
+import Post from "../PostInput/Post";
+import Timeline from "../Timeline/Timeline";
 
 export default function Feed() {
   return (

@@ -1,5 +1,5 @@
 import "./Post.css";
-import profilePicture from "../assets/profile-picture.jpg";
+import profilePicture from "../../assets/profile-picture.jpg";
 import PermMediaOutlinedIcon from "@mui/icons-material/PermMediaOutlined";
 import TagOutlinedIcon from "@mui/icons-material/TagOutlined";
 import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";

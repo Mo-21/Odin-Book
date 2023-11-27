@@ -1,6 +1,6 @@
 import "./Timeline.css";
-import profilePicture from "../assets/profile-picture.jpg";
-import welcome from "../assets/welcome.jpg";
+import profilePicture from "../../assets/profile-picture.jpg";
+import welcome from "../../assets/welcome.jpg";
 import UnfoldMoreOutlinedIcon from "@mui/icons-material/UnfoldMoreOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import GradeOutlinedIcon from "@mui/icons-material/GradeOutlined";

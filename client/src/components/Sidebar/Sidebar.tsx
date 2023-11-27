@@ -1,5 +1,4 @@
 import "./Sidebar.css";
-import "../App.css";
 import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined";
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import Groups2OutlinedIcon from "@mui/icons-material/Groups2Outlined";

@@ -1,6 +1,6 @@
 import { Person, Message, Notifications, Search } from "@mui/icons-material";
 import "./Tobpar.css";
-import profilePicture from "../assets/profile-picture.jpg";
+import profilePicture from "../../assets/profile-picture.jpg";
 
 export default function Topbar() {
   return (
