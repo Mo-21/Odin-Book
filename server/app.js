@@ -10,6 +10,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt");
 const session = require("express-session");
+const cookieParser = require("cookie-parser");
 
 const { User } = require("./models/User");
 const Post = require("./models/Post");
@@ -60,6 +61,7 @@ passport.deserializeUser(async (id, done) => {
 });
 
 // Middleware
+app.use(cookieParser());
 app.use(express.json());
 app.use(morgan("common"));
 app.use(helmet());

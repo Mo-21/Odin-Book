@@ -26,16 +26,30 @@ router.post("/register", async (req, res) => {
     password: hashedPassword,
   });
 
+  const accessToken = user.generateAuthToken();
+
   try {
     const savedUser = await user.save();
-    res.status(200).json({
-      _id: savedUser._id,
-      username: savedUser.username,
-      email: savedUser.email,
-      isAdmin: savedUser.isAdmin,
-      createdAt: savedUser.createdAt,
-      updatedAt: savedUser.updatedAt,
-    });
+    res
+      .status(200)
+      .cookie(
+        ("accessToken",
+        accessToken,
+        {
+          httpOnly: true,
+          maxAge: 3_600_000,
+          // secure: true,
+          sameSite: "strict",
+        })
+      )
+      .json({
+        _id: savedUser._id,
+        username: savedUser.username,
+        email: savedUser.email,
+        isAdmin: savedUser.isAdmin,
+        createdAt: savedUser.createdAt,
+        updatedAt: savedUser.updatedAt,
+      });
   } catch (error) {
     res.status(400).send(error);
   }
@@ -47,15 +61,47 @@ router.post("/login", passport.authenticate("local"), async (req, res) => {
   if (error) return res.status(400).send(error.message);
 
   const user = await User.findOne({ email: req.body.email });
+  const accessToken = user.generateAuthToken();
 
-  res.status(200).json({
-    _id: user._id,
-    username: user.username,
-    email: user.email,
-    isAdmin: user.isAdmin,
-    createdAt: user.createdAt,
-    updatedAt: user.updatedAt,
-  });
+  res
+    .status(200)
+    .cookie("accessToken", accessToken, {
+      httpOnly: true,
+      maxAge: 3_600_000,
+      // secure: true,
+      sameSite: "strict",
+    })
+    .json({
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    });
+});
+
+//Logout
+router.get("/logout", async (req, res) => {
+  let token = req.cookies.accessToken;
+  console.log(token);
+  if (!token) return res.status(400).json({ message: "You are not logged in" });
+  if (token === undefined)
+    return res.status(400).json({ message: "Invalid Access Token" });
+  token = null;
+  try {
+    res
+      .status(200)
+      .cookie("accessToken", token, {
+        httpOnly: true,
+        maxAge: 0,
+        // secure: true,
+        sameSite: "strict",
+      })
+      .json({ message: "You have been logged out" });
+  } catch (err) {
+    res.status(500).json(err.message);
+  }
 });
 
 module.exports = router;

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
 const { escape } = require("validator");
+const jwt = require("jsonwebtoken");
 
 const Schema = mongoose.Schema;
 
@@ -98,6 +99,16 @@ function sanitizeUser(user) {
     email: escape(user.email),
   };
 }
+
+userSchema.methods.generateAuthToken = function () {
+  return jwt.sign(
+    {
+      _id: this._id,
+    },
+    process.env.JWT_ACCESS_KEY,
+    { expiresIn: "1h" }
+  );
+};
 
 const User = mongoose.model("User", userSchema);
 
