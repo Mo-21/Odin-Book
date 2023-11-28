@@ -17,7 +17,7 @@ export interface User {
   createdAt: string;
 }
 
-type id = {
+export type id = {
   userId: string;
 };
 
