@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import ClientAPI from "../ClientAPI";
+import useAuth from "../Login/useAuth";
 
 export interface Post {
   _id: string;
@@ -21,11 +22,13 @@ const useTimeline = () => {
   const [isLoading, setLoading] = useState(true);
   const [isError, setError] = useState<string | null>(null);
 
+  const user = useAuth();
+
   console.log(timeline);
   useEffect(() => {
     const getTimeline = async () => {
       const Client = new ClientAPI<UserId, Post[]>(
-        "/posts/timeline/6563f2e8f849e547a02c43cb"
+        `/posts/timeline/${user?._id}`
       );
       try {
         const data = await Client.getTimeline();
@@ -38,7 +41,7 @@ const useTimeline = () => {
       }
     };
     getTimeline();
-  }, []);
+  }, [user?._id]);
 
   return { timeline, isLoading, isError };
 };
