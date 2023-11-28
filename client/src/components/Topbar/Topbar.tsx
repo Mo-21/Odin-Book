@@ -1,8 +1,13 @@
 import { Person, Message, Notifications, Search } from "@mui/icons-material";
 import "./Tobpar.css";
-import profilePicture from "../../assets/profile-picture.jpg";
+import useAuth from "../Login/useAuth";
+import { Link } from "react-router-dom";
+import Logout from "../pages/Logout";
 
 export default function Topbar() {
+  const user = useAuth();
+
+  const PF = import.meta.env.VITE_PUBLIC_FOLDER;
   return (
     <div className="topbar-container">
       <div className="left-side">Connect</div>
@@ -12,12 +17,12 @@ export default function Topbar() {
       </div>
       <div className="navigation-links">
         <div className="homepage-link">
-          <a className="links home-link" href="#">
+          <Link to={`/${user?._id}`} className="links home-link">
             Home
-          </a>
-          <a className="links timeline-link" href="#">
-            Timeline
-          </a>
+          </Link>
+          <div>
+            <Logout />
+          </div>
         </div>
       </div>
       <div className="icons-links">
@@ -27,11 +32,18 @@ export default function Topbar() {
       </div>
       <div className="right-side">
         <div className="user-profile">
-          <img
-            className="profile-picture"
-            src={profilePicture}
-            alt="profilePicture"
-          />
+          <Link to={`profile/${user?._id}`}>
+            <img
+              className="profile-picture"
+              src={
+                PF +
+                (user?.profilePicture
+                  ? user.profilePicture
+                  : "users/default.png")
+              }
+              alt="profilePicture"
+            />
+          </Link>
         </div>
       </div>
     </div>
