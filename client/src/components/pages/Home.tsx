@@ -2,6 +2,7 @@ import Topbar from "../Topbar/Topbar";
 import Feed from "../Feed/Feed";
 import Sidebar from "../Sidebar/Sidebar";
 import { Outlet } from "react-router-dom";
+import "../../assets/App.css";
 
 export default function Home() {
   return (
