@@ -22,6 +22,10 @@ class ClientAPI<T, R> {
   getUser = () => {
     return axiosInstance.get<R>(this.endpoint).then((res) => res.data);
   };
+
+  likePost = (data: T) => {
+    return axiosInstance.put(this.endpoint, data).then((res) => res.data);
+  };
 }
 
 export default ClientAPI;
