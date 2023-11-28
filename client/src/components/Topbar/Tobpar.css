@@ -65,6 +65,19 @@
   display: none;
 }
 
+.homepage-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.timeline-link {
+  background: none;
+  color: #ddd;
+  border: none;
+  cursor: pointer;
+}
+
 .icons-links {
   display: flex;
   cursor: pointer;
