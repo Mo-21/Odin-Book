@@ -1,10 +1,11 @@
 import "./Timeline.css";
-import welcome from "../../assets/welcome.jpg";
 import UnfoldMoreOutlinedIcon from "@mui/icons-material/UnfoldMoreOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import GradeOutlinedIcon from "@mui/icons-material/GradeOutlined";
 import { Post } from "./useTimeline";
 import useAuthorDetails from "./useAuthorDetails";
+import { Link } from "react-router-dom";
+import { format } from "timeago.js";
 
 export default function Timeline({ post }: { post: Post }) {
   const { user, loading, error } = useAuthorDetails({ userId: post.userId });
@@ -20,15 +21,25 @@ export default function Timeline({ post }: { post: Post }) {
       <div className="post-container">
         <div className="user-details">
           <div className="author-details">
-            <img src={PF + user.profilePicture} alt="profilePicture" />
+            <Link to={`profile/${user._id}`}>
+              <img
+                src={
+                  PF +
+                  (user.profilePicture
+                    ? user.profilePicture
+                    : "users/default.png")
+                }
+                alt="profilePicture"
+              />
+            </Link>
             <span className="username">{user.username}</span>
-            <span className="post-date">5 mins ago</span>
+            <span className="post-date">{format(post.createdAt)}</span>
           </div>
           <UnfoldMoreOutlinedIcon className="more-icon" />
         </div>
         <div className="body">
           <div className="post-content">{post.content}</div>
-          <img src={welcome} alt="welcome" />
+          {post.img ? <img src={PF + post.img} alt="welcome" /> : null}
         </div>
         <div className="post-interaction">
           <div className="rate">

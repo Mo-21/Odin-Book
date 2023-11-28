@@ -5,6 +5,7 @@ export interface Post {
   _id: string;
   userId: string;
   content: string;
+  img: string;
   likes: Array<string>;
   comments: Array<string>;
   createdAt: Date;
@@ -17,14 +18,14 @@ export interface UserId {
 
 const useTimeline = () => {
   const [timeline, setTimeline] = useState<Post[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setLoading] = useState(true);
+  const [isError, setError] = useState<string | null>(null);
 
   console.log(timeline);
   useEffect(() => {
     const getTimeline = async () => {
       const Client = new ClientAPI<UserId, Post[]>(
-        "/posts/timeline/65640905dd86102a984e72ff"
+        "/posts/timeline/6563f2e8f849e547a02c43cb"
       );
       try {
         const data = await Client.getTimeline();
@@ -39,7 +40,7 @@ const useTimeline = () => {
     getTimeline();
   }, []);
 
-  return { timeline, loading, error };
+  return { timeline, isLoading, isError };
 };
 
 export default useTimeline;
