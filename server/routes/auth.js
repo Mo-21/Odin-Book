@@ -30,18 +30,14 @@ router.post("/register", async (req, res) => {
 
   try {
     const savedUser = await user.save();
-    res
+    return res
       .status(200)
-      .cookie(
-        ("accessToken",
-        accessToken,
-        {
-          httpOnly: true,
-          maxAge: 3_600_000,
-          // secure: true,
-          sameSite: "strict",
-        })
-      )
+      .cookie("accessToken", accessToken, {
+        httpOnly: true,
+        maxAge: 3_600_000,
+        // secure: true,
+        sameSite: "strict",
+      })
       .json({
         _id: savedUser._id,
         username: savedUser.username,
@@ -63,13 +59,14 @@ router.post("/login", passport.authenticate("local"), async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
   const accessToken = user.generateAuthToken();
 
-  res
+  return res
     .status(200)
-    .cookie("accessToken", accessToken, {
+    .cookie("jwt", accessToken, {
+      //maxAge = number of milliseconds in a time period
+      maxAge: 60 * 60 * 1000, // 3600000
       httpOnly: true,
-      maxAge: 3_600_000,
-      // secure: true,
       sameSite: "strict",
+      // secure: true, //we activate it in production
     })
     .json({
       _id: user._id,
