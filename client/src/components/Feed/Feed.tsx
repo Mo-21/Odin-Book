@@ -3,16 +3,16 @@ import Timeline from "../Timeline/Timeline";
 import useTimeline from "../Timeline/useTimeline";
 
 export default function Feed() {
-  const { timeline, loading, error } = useTimeline();
+  const { timeline, isLoading, isError } = useTimeline();
 
   return (
     <div className="feed">
       <Post />
-      {loading && <div>Loading...</div>}
-      {error && <div>{error}</div>}
-      {!loading && !error && timeline.length === 0 && <div>No posts</div>}
-      {!loading &&
-        !error &&
+      {isLoading && <div>isLoading...</div>}
+      {isError && <div>{isError}</div>}
+      {!isLoading && !isError && timeline.length === 0 && <div>No posts</div>}
+      {!isLoading &&
+        !isError &&
         timeline.length > 0 &&
         timeline.map((post) => {
           return <Timeline key={post._id} post={post} />;
