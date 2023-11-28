@@ -14,6 +14,14 @@ class ClientAPI<T, R> {
   login = (data: T) => {
     return axiosInstance.post<R>(this.endpoint, data).then((res) => res.data);
   };
+
+  getTimeline = () => {
+    return axiosInstance.get<R>(this.endpoint).then((res) => res.data);
+  };
+
+  getUser = () => {
+    return axiosInstance.get<R>(this.endpoint).then((res) => res.data);
+  };
 }
 
 export default ClientAPI;
