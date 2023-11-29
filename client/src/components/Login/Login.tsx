@@ -1,6 +1,6 @@
 import "./Login.css";
 import logo from "../../assets/link.svg";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import useLogin from "./useLogin";
 import { useNavigate } from "react-router-dom";
 
@@ -8,6 +8,7 @@ export default function Login() {
   const email = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
+  const [isError, setIsError] = useState(false);
 
   const login = useLogin(() => {});
 
@@ -28,7 +29,11 @@ export default function Login() {
               email: email.current?.value,
               password: password.current?.value,
             });
-          navigate("/");
+          if (login.isError) {
+            setIsError(true);
+          } else {
+            navigate("/");
+          }
         }}
         className="login-form"
       >
@@ -50,11 +55,12 @@ export default function Login() {
           />
         </div>
         <div className="login-btn">
-          <button type="submit" className="btn-login">
+          <button disabled={isError} type="submit" className="btn-login">
             Login
           </button>
         </div>
       </form>
+      {isError && <div className="error">Invalid Credentials</div>}
     </div>
   );
 }
