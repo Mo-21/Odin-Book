@@ -11,6 +11,8 @@ interface FriendsList {
 
 const useFriends = ({ userId }: id) => {
   const [friends, setFriendsList] = useState<FriendsList[]>([]);
+  const [isLoading, setLoading] = useState(true);
+  const [isError, setError] = useState<string | null>(null);
 
   console.log(userId);
   useEffect(() => {
@@ -24,13 +26,15 @@ const useFriends = ({ userId }: id) => {
         setFriendsList(data);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: Error | any) {
-        console.log(error?.message);
+        setError(error?.message);
+      } finally {
+        setLoading(false);
       }
     };
     fetchFriends();
   }, [userId]);
 
-  return { friends };
+  return { friends, isLoading, isError };
 };
 
 export default useFriends;
