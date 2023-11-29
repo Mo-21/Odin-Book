@@ -4,6 +4,7 @@ if (process.env.NODE_ENV !== "production") {
 const cors = require("cors");
 const express = require("express");
 const morgan = require("morgan");
+const logger = require("morgan");
 const helmet = require("helmet");
 const mongoose = require("mongoose");
 const passport = require("passport");
@@ -11,9 +12,10 @@ const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
+const multer = require("multer");
+const path = require("path");
 
 const { User } = require("./models/User");
-const Post = require("./models/Post");
 
 const app = express();
 
@@ -23,6 +25,7 @@ const db = mongoose.connection;
 db.on("error", (error) => console.error(error));
 db.once("open", () => console.log("Connected to database"));
 
+app.use("/images", express.static(path.join(__dirname, "public/images")));
 // Passport config
 passport.use(
   new LocalStrategy(
@@ -61,10 +64,15 @@ passport.deserializeUser(async (id, done) => {
 });
 
 // Middleware
-app.use(cors());
-app.use(cookieParser());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  })
+);
 app.use(express.json());
+app.use(cookieParser());
 app.use(morgan("common"));
+app.use(logger("dev"));
 app.use(helmet());
 app.use(
   session({
@@ -77,10 +85,30 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 
+// Set storage engine
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/images");
+  },
+  filename: (req, file, cb) => {
+    cb(null, req.body.name);
+  },
+});
+
+const upload = multer({ storage: storage });
+app.post("/api/upload", upload.single("file"), (req, res) => {
+  try {
+    return res.status(200).json("File uploaded successfully");
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 // Routes
 app.use("/api/users", require("./routes/users"));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/posts", require("./routes/posts"));
+app.use("/api/comments", require("./routes/comments"));
 
 // Serve static assets in production
 app.listen(process.env.PORT || 3000, () => {
