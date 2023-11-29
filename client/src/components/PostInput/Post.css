@@ -12,6 +12,8 @@
 
 .share-input {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   margin-bottom: 20px;
 }
@@ -28,6 +30,8 @@
   flex-grow: 1;
   padding: 10px;
   border-radius: 10px;
+  min-width: 300px;
+  margin-bottom: 20px;
   border: none;
   background-color: #555; /* dark input field */
   color: #ddd; /* light text for contrast */
@@ -36,6 +40,7 @@
 .post-actions {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: 5px;
 }
 
@@ -52,6 +57,14 @@
 .post-actions div span {
   margin-left: 5px;
   font-size: 1.4rem;
+}
+
+.post-actions div label {
+  margin-left: 5px;
+  font-size: 1.4rem;
+  cursor: pointer;
+  display: flex;
+  gap: 5px;
 }
 
 .submit-btn {
@@ -78,12 +91,39 @@
   background-color: #777; /* slightly lighter button on hover */
 }
 
+.share-img-container {
+  width: 100%;
+  height: auto;
+  position: relative;
+}
+
+.share-img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 20px;
+}
+
+.share-cancel-img {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
 @media (max-width: 700px) {
   .post-actions div span {
     margin-left: 2px;
     font-size: 1rem;
   }
 
+  .post-actions div label {
+    margin-left: 5px;
+    font-size: 1rem;
+  }
+
+  .post-actions {
+    justify-content: space-around;
+  }
   .btn {
     font-size: 1rem;
     font-weight: bold;
