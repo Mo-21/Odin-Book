@@ -6,14 +6,54 @@ import { Link, useParams } from "react-router-dom";
 import useAuthorDetails from "../Timeline/useAuthorDetails";
 import useUserPosts from "./useUserPosts";
 import useFriends from "./useFriends";
+import useAuth from "../Login/useAuth";
+import { format } from "timeago.js";
+import { useEffect, useState } from "react";
+import ClientAPI from "../ClientAPI";
 
 export default function Profile() {
   const userId = useParams();
-
+  const currentUser = useAuth();
   const { user, loading, error } = useAuthorDetails({ userId: userId.id! });
   const { timeline, isLoading, isError } = useUserPosts({ userId: userId.id! });
   const { friends } = useFriends({ userId: userId.id! });
+  const [followed, setFollowed] = useState(
+    currentUser?.followings?.includes(userId.id!)
+  );
+  //useEffect to handle follow status
+  useEffect(() => {
+    if (currentUser?.followings && userId?.id) {
+      setFollowed(currentUser?.followings.includes(userId?.id));
+    } else {
+      setFollowed(true);
+    }
+  }, [currentUser, userId.id]);
 
+  //handle follow
+  const handleFollow = async () => {
+    try {
+      if (followed) {
+        const res = new ClientAPI(`/users/${userId.id}/unfollow`);
+        const data = await res.unFollowUser({ userId: currentUser?._id });
+        if (currentUser?.followings && userId.id)
+          currentUser.followings = currentUser?.followings.filter(
+            (id) => id !== userId.id
+          );
+        console.log(data);
+      } else {
+        const res = new ClientAPI(`/users/${userId.id}/follow`);
+        const data = await res.followUser({ userId: currentUser?._id });
+        if (currentUser?.followings && userId.id)
+          currentUser.followings.push(userId.id);
+        console.log(data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    setFollowed(!followed);
+  };
+
+  console.log(`VisitorID:${userId.id}, UserID:${currentUser?._id}`);
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
 
@@ -88,7 +128,9 @@ export default function Profile() {
                           alt="profilePicture"
                         />
                         <span className="username">{user.username}</span>
-                        <span className="post-date">5 mins ago</span>
+                        <span className="post-date">
+                          {format(post.createdAt)}
+                        </span>
                       </div>
                       <UnfoldMoreOutlinedIcon className="more-icon" />
                     </div>
@@ -129,6 +171,20 @@ export default function Profile() {
             })}
         </div>
         <div className="users-basic-info">
+          {currentUser?._id !== userId.id &&
+            (followed ? (
+              <div className="follow">
+                <button onClick={handleFollow} className="follow-btn">
+                  Unfollow <span className="plus">-</span>
+                </button>
+              </div>
+            ) : (
+              <div className="follow">
+                <button onClick={handleFollow} className="follow-btn">
+                  Follow <span className="plus">+</span>
+                </button>
+              </div>
+            ))}
           <div className="information">
             <div className="city">
               City:
@@ -152,7 +208,7 @@ export default function Profile() {
               <div key={friend._id} className="user-follower">
                 <Link
                   style={{ textDecoration: "none", color: "white" }}
-                  to={`profile/${friend._id}`}
+                  to={`/profile/${friend._id}`}
                 >
                   <div className="follower-picture">
                     <img src={PF + friend.profilePicture} alt="woman" />
