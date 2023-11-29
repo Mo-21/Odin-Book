@@ -91,7 +91,7 @@ export default function Profile() {
       </div>
       <div className="user-activity">
         <div className="user-activity-item">
-          <div className="user-activity-item-count">0</div>
+          <div className="user-activity-item-count">{timeline.length}</div>
           <div className="user-activity-item-text">Posts</div>
         </div>
         <div className="user-activity-item">
