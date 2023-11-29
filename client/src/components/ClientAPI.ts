@@ -26,6 +26,22 @@ class ClientAPI<T, R> {
   likePost = (data: T) => {
     return axiosInstance.put(this.endpoint, data).then((res) => res.data);
   };
+
+  sharePost = (data: T) => {
+    return axiosInstance.post<R>(this.endpoint, data).then((res) => res.data);
+  };
+
+  fetchFriends = () => {
+    return axiosInstance.get<R>(this.endpoint).then((res) => res.data);
+  };
+
+  followUser = (data: T) => {
+    return axiosInstance.put(this.endpoint, data).then((res) => res.data);
+  };
+
+  unFollowUser = (data: T) => {
+    return axiosInstance.put(this.endpoint, data).then((res) => res.data);
+  };
 }
 
 export default ClientAPI;
