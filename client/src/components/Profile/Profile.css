@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 100vh;
 }
 
 .users-profile-info {
@@ -82,13 +83,15 @@
   justify-content: space-between;
   margin-top: 20px;
   height: 100vh;
-  overflow-y: auto;
   overflow-x: hidden;
 }
 
 .user-posts {
   flex: 1;
   margin: 0 20px;
+  height: 100%;
+  overflow-y: auto;
+  padding: 20px;
 }
 
 .users-basic-info {
@@ -127,9 +130,36 @@
 
 .follower-picture img {
   object-fit: cover;
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
+}
+
+.follow-btn {
+  background-color: #333; /* Green */
+  border: none;
+  color: #ddd;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 10px;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  font-size: 1.5rem;
+}
+
+.follow-btn:hover {
+  background-color: white;
+  color: black;
+}
+
+.plus {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-left: 10px;
 }
 
 @media (max-width: 700px) {
