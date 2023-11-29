@@ -12,7 +12,10 @@ const {
 router.post("/register", async (req, res) => {
   sanitizeUser(req.body);
   const { error } = validateNewUser(req.body);
-  if (error) return res.status(400).send(error.message);
+  if (error) {
+    console.log(error.message);
+    return res.status(400).send(error.message);
+  }
 
   const userExists = await User.findOne({ email: req.body.email });
   if (userExists) return res.status(400).send("Email already exists");
@@ -58,11 +61,11 @@ router.post("/login", passport.authenticate("local"), async (req, res) => {
 
   const user = await User.findOne({ email: req.body.email });
   const accessToken = user.generateAuthToken();
+  console.log(accessToken);
 
   return res
     .status(200)
-    .cookie("jwt", accessToken, {
-      //maxAge = number of milliseconds in a time period
+    .cookie("accessToken", accessToken, {
       maxAge: 60 * 60 * 1000, // 3600000
       httpOnly: true,
       sameSite: "strict",
@@ -72,6 +75,7 @@ router.post("/login", passport.authenticate("local"), async (req, res) => {
       _id: user._id,
       username: user.username,
       email: user.email,
+      profilePicture: user.profilePicture,
       isAdmin: user.isAdmin,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
