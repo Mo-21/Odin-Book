@@ -32,7 +32,7 @@ export default function Topbar() {
       </div>
       <div className="right-side">
         <div className="user-profile">
-          <Link to={`profile/${user?._id}`}>
+          <Link to={`/profile/${user?._id}`}>
             <img
               className="profile-picture"
               src={
