@@ -11,6 +11,7 @@ export interface LoginResponse {
   _id: string;
   username: string;
   email: string;
+  profilePicture: string;
   isAdmin: boolean;
   createdAt: string;
   updatedAt: string;
