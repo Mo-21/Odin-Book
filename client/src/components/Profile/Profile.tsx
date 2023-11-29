@@ -2,15 +2,17 @@ import "./Profile.css";
 import UnfoldMoreOutlinedIcon from "@mui/icons-material/UnfoldMoreOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import GradeOutlinedIcon from "@mui/icons-material/GradeOutlined";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useAuthorDetails from "../Timeline/useAuthorDetails";
 import useUserPosts from "./useUserPosts";
+import useFriends from "./useFriends";
 
 export default function Profile() {
   const userId = useParams();
 
   const { user, loading, error } = useAuthorDetails({ userId: userId.id! });
   const { timeline, isLoading, isError } = useUserPosts({ userId: userId.id! });
+  const { friends } = useFriends({ userId: userId.id! });
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
@@ -92,11 +94,7 @@ export default function Profile() {
                     </div>
                     <div className="body">
                       <div className="post-content">{post.content}</div>
-                      {post.img ? (
-                        <img src={PF + post.img} alt="welcome" />
-                      ) : (
-                        <div className="no-posts">No Posts</div>
-                      )}
+                      {post.img && <img src={PF + post.img} alt="welcome" />}
                     </div>
                     <div className="post-interaction">
                       <div className="rate">
@@ -149,19 +147,20 @@ export default function Profile() {
             style={{ textAlign: "center", fontSize: "1.4rem" }}
             className="users-followers"
           >
-            Followers {user.followers.length}
-            <div className="user-follower">
-              <div className="follower-picture">
-                <img src="" alt="woman" />
+            Followings {friends.length}
+            {friends.map((friend) => (
+              <div key={friend._id} className="user-follower">
+                <Link
+                  style={{ textDecoration: "none", color: "white" }}
+                  to={`profile/${friend._id}`}
+                >
+                  <div className="follower-picture">
+                    <img src={PF + friend.profilePicture} alt="woman" />
+                  </div>
+                  <div className="follower-name">{friend.username}</div>
+                </Link>
               </div>
-              <div className="follower-name">Jane Malarky</div>
-            </div>
-            <div className="user-follower">
-              <div className="follower-picture">
-                <img src="" alt="woman" />
-              </div>
-              <div className="follower-name">Aloha Mandana</div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
