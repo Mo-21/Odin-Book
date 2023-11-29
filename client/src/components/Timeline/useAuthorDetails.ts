@@ -31,7 +31,6 @@ const useAuthorDetails = ({ userId }: id) => {
       const Client = new ClientAPI<id, User>(`/users/${userId}`);
       try {
         const res = await Client.getUser();
-        console.log(res);
         setUser(res);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: Error | any) {
