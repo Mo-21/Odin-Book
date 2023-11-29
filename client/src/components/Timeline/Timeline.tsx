@@ -2,14 +2,14 @@ import "./Timeline.css";
 import UnfoldMoreOutlinedIcon from "@mui/icons-material/UnfoldMoreOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import GradeOutlinedIcon from "@mui/icons-material/GradeOutlined";
-import { Post } from "./useTimeline";
+import { PostResponse } from "./useTimeline";
 import useAuthorDetails, { id } from "./useAuthorDetails";
 import { Link } from "react-router-dom";
 import { format } from "timeago.js";
 import { useEffect, useState } from "react";
 import ClientAPI from "../ClientAPI";
 
-export default function Timeline({ post }: { post: Post }) {
+export default function Timeline({ post }: { post: PostResponse }) {
   const [likes, setLikes] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
 
