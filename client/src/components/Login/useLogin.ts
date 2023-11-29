@@ -34,10 +34,16 @@ function useLogin(onLogin: () => void) {
         ["user"],
         response
       );
-      console.log(response);
+      localStorage.setItem("userDetails", JSON.stringify(response));
       navigate(`/${response._id}`);
       onLogin();
       return previousUser;
+    },
+    onError: (error, _credentials, context) => {
+      console.error("Login failed:", error);
+      if (context?.previousUser) {
+        queryClient.setQueryData(["user"], context.previousUser);
+      }
     },
   });
 }
