@@ -7,6 +7,7 @@ function Logout() {
 
   const handleLogout = () => {
     queryClient.clear();
+    localStorage.removeItem("userDetails");
     navigate("/login");
   };
 
