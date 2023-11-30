@@ -62,6 +62,18 @@ class ClientAPI<T, R> {
       .delete(this.endpoint, { data })
       .then((res) => res.data);
   };
+
+  getConversation = () => {
+    return axiosInstance.get<R>(this.endpoint).then((res) => res.data);
+  };
+
+  getMessages = () => {
+    return axiosInstance.get<R>(this.endpoint).then((res) => res.data);
+  };
+
+  sendMessage = (data: T) => {
+    return axiosInstance.post<R>(this.endpoint, data).then((res) => res.data);
+  };
 }
 
 export default ClientAPI;
