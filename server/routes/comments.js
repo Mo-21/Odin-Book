@@ -8,7 +8,6 @@ router.post("/", async (req, res) => {
   try {
     const { error } = validateComment({ content: req.body.content });
     if (error) return res.status(400).send(error.message);
-
     const newComment = new Comment(req.body);
     const savedComment = await newComment.save();
     await Post.findByIdAndUpdate(
