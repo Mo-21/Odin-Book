@@ -42,7 +42,6 @@ function useRegister(onRegister: () => void) {
         ["user"],
         response
       );
-      console.log(response);
       navigate(`/${response._id}`);
       onRegister();
       return previousUser;
