@@ -19,42 +19,34 @@ router.post("/", async (req, res) => {
 });
 
 // Edit a Post
-router.put(
-  "/:id",
-  [authorize, passport.authenticate("jwt", { session: false })],
-  async (req, res) => {
-    try {
-      const post = await Post.findById(req.params.id);
-      if (post.userId === req.params.id) {
-        res.status(403).json("You can only update your post!");
-      } else {
-        await post.updateOne({ $set: req.body });
-        res.status(200).json("The post has been updated!");
-      }
-    } catch (err) {
-      res.status(500).json(err.message);
+router.put("/:id", async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (post.userId === req.params.id) {
+      res.status(403).json("You can only update your post!");
+    } else {
+      await post.updateOne({ $set: req.body });
+      res.status(200).json("The post has been updated!");
     }
+  } catch (err) {
+    res.status(500).json(err.message);
   }
-);
+});
 
 // Delete a Post
-router.delete(
-  "/:id/delete",
-  [authorize, passport.authenticate("jwt", { session: false })],
-  async (req, res) => {
-    try {
-      const post = await Post.findById(req.params.id);
-      if (post.userId === req.body.userId) {
-        await post.deleteOne();
-        res.status(200).json("The post has been deleted!");
-      } else {
-        res.status(403).json("You can only delete your posts!");
-      }
-    } catch (err) {
-      res.status(500).json(err.message);
+router.delete("/:id/delete", async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    if (post.userId === req.body.userId) {
+      await post.deleteOne();
+      res.status(200).json("The post has been deleted!");
+    } else {
+      res.status(403).json("You can only delete your posts!");
     }
+  } catch (err) {
+    res.status(500).json(err.message);
   }
-);
+});
 
 // Like/Dislike a Post
 router.put("/:id/like", async (req, res) => {

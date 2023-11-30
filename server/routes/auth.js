@@ -13,7 +13,6 @@ router.post("/register", async (req, res) => {
   sanitizeUser(req.body);
   const { error } = validateNewUser(req.body);
   if (error) {
-    console.log(error.message);
     return res.status(400).send(error.message);
   }
 
@@ -61,7 +60,6 @@ router.post("/login", passport.authenticate("local"), async (req, res) => {
 
   const user = await User.findOne({ email: req.body.email });
   const accessToken = user.generateAuthToken();
-  console.log(accessToken);
 
   return res
     .status(200)
@@ -79,13 +77,14 @@ router.post("/login", passport.authenticate("local"), async (req, res) => {
       isAdmin: user.isAdmin,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
+      followers: user.followers,
+      followings: user.followings,
     });
 });
 
 //Logout
 router.get("/logout", async (req, res) => {
   let token = req.cookies.accessToken;
-  console.log(token);
   if (!token) return res.status(400).json({ message: "You are not logged in" });
   if (token === undefined)
     return res.status(400).json({ message: "Invalid Access Token" });
