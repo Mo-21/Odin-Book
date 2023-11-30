@@ -10,7 +10,7 @@ import { PostResponse } from "../Timeline/useTimeline";
 import ClientAPI from "../ClientAPI";
 import { Cancel } from "@mui/icons-material";
 
-interface NewPost {
+export interface NewPost {
   userId: string;
   content: string;
   img?: string;
@@ -46,7 +46,6 @@ export default function Post() {
       data.append("name", fileName);
       data.append("file", file);
       newPost.img = fileName;
-      console.log(newPost);
       try {
         await axios.post("/api/upload", data);
       } catch (err) {
@@ -54,8 +53,7 @@ export default function Post() {
       }
     }
     try {
-      const res = await Client.sharePost(newPost);
-      console.log(res);
+      await Client.sharePost(newPost);
     } catch (err) {
       console.log(err);
     }
@@ -74,6 +72,9 @@ export default function Post() {
         />
         <input
           ref={status}
+          type="text"
+          required
+          maxLength={1000}
           className="share-input-text"
           placeholder={`Express yourself ${user?.username}, don't be shy.`}
         />
