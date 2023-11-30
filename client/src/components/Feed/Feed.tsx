@@ -8,7 +8,7 @@ export default function Feed() {
   return (
     <div className="feed">
       <Post />
-      {isLoading && <div>isLoading...</div>}
+      {isLoading && <div>Loading...</div>}
       {isError && <div>{isError}</div>}
       {!isLoading && !isError && timeline.length === 0 && <div>No posts</div>}
       {!isLoading &&
