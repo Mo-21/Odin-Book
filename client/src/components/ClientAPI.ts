@@ -52,6 +52,16 @@ class ClientAPI<T, R> {
       .delete(this.endpoint, { data })
       .then((res) => res.data);
   };
+
+  updatePost = (data: T) => {
+    return axiosInstance.put(this.endpoint, data).then((res) => res.data);
+  };
+
+  deletePost = (data: T) => {
+    return axiosInstance
+      .delete(this.endpoint, { data })
+      .then((res) => res.data);
+  };
 }
 
 export default ClientAPI;
