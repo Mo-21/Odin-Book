@@ -11,7 +11,6 @@ const authorize = async (req, res, next) => {
     try {
       //Get token from header
       token = req.cookies.accessToken;
-      console.log(token);
       const decoded = jwt.verify(token, process.env.JWT_ACCESS_KEY);
       if (!token) return res.status(401).json("Not Authorized!");
       //Get the user from the token
