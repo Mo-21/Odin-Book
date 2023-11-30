@@ -1,0 +1,36 @@
+.chat-online-friends {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.chat-img-container {
+  position: relative;
+  margin-right: 10px;
+}
+
+.chat-online-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid white;
+}
+
+.chat-online-marker {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: limegreen;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+}
+
+@media screen and (max-width: 768px) {
+  .chat-online-name {
+    display: none;
+  }
+}
