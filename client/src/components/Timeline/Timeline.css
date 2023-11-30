@@ -105,6 +105,81 @@
   list-style: square;
 }
 
+.comment-action {
+  padding: 10px;
+  background-color: #555;
+  border-radius: 5px;
+  color: #ddd;
+}
+
+.comment {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #333;
+  border-radius: 5px;
+}
+
+.comment-author {
+  display: flex;
+  align-items: center;
+}
+
+.comment-author-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.comment-username {
+  font-weight: bold;
+}
+
+.comment-content {
+  margin-top: 5px;
+  padding: 5px;
+  font-size: 1.2rem;
+}
+
+.send-comment {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.comment-input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #333;
+  margin-right: 10px;
+  color: #333;
+}
+
+.submit-comment {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #555;
+  background-color: #333;
+  color: #ddd;
+  cursor: pointer;
+}
+
+.delete-comment {
+  margin-left: auto;
+  color: #555;
+  cursor: pointer;
+}
+
+.delete-comment-btn {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #555;
+  background-color: #333;
+  color: #ddd;
+  cursor: pointer;
+}
+
 @media (max-width: 700px) {
   .timeline {
     width: 100%;
