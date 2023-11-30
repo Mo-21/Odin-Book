@@ -42,6 +42,16 @@ class ClientAPI<T, R> {
   unFollowUser = (data: T) => {
     return axiosInstance.put(this.endpoint, data).then((res) => res.data);
   };
+
+  commentPost = (data: T) => {
+    return axiosInstance.post<R>(this.endpoint, data).then((res) => res.data);
+  };
+
+  deleteComment = (data: T) => {
+    return axiosInstance
+      .delete(this.endpoint, { data })
+      .then((res) => res.data);
+  };
 }
 
 export default ClientAPI;
