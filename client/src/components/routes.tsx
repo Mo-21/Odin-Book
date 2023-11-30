@@ -5,6 +5,7 @@ import Register from "./Register/Register";
 import App from "./pages/App";
 import { Logout } from "@mui/icons-material";
 import PersonalProfile from "./pages/PersonalProfile";
+import Messenger from "./Messenger/Messenger";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
         element: <PersonalProfile />,
       },
     ],
+  },
+  {
+    path: "/messenger",
+    element: <Messenger />,
   },
   {
     path: "/login",
