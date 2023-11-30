@@ -212,5 +212,36 @@
   .post-container {
     width: 100%;
     min-width: 200px;
+    font-size: 0.9rem;
+  }
+  .post-content {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .delete-post,
+  .edit-post {
+    display: flex;
+    padding: 5px;
+    width: 50px;
+    font-size: 1rem;
+  }
+  .post-content {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .delete-post,
+  .edit-post {
+    display: flex;
+    padding: 3px;
+    width: 40px;
+    font-size: 0.7rem;
+  }
+
+  .post-content {
+    font-size: 1rem;
   }
 }
