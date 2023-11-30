@@ -14,36 +14,31 @@ export default function Profile() {
   const [followed, setFollowed] = useState(
     currentUser?.followings?.includes(userId.id!)
   );
-  //useEffect to handle follow status
-  useEffect(() => {
-    if (currentUser?.followings && userId?.id) {
-      setFollowed(currentUser?.followings.includes(userId?.id));
-    } else {
-      setFollowed(true);
-    }
-  }, [currentUser, userId.id]);
 
-  //handle follow
+  // handle follow
   const handleFollow = async () => {
     try {
       if (followed) {
         const res = new ClientAPI(`/users/${userId.id}/unfollow`);
         await res.unFollowUser({ userId: currentUser?._id });
-        if (currentUser?.followings && userId.id)
-          currentUser.followings = currentUser?.followings.filter(
-            (id) => id !== userId.id
-          );
+        if (user?.followings && userId.id)
+          user.followings = user?.followings.filter((id) => id !== userId.id);
       } else {
         const res = new ClientAPI(`/users/${userId.id}/follow`);
         await res.followUser({ userId: currentUser?._id });
-        if (currentUser?.followings && userId.id)
-          currentUser.followings.push(userId.id);
+        if (user?.followings && userId.id) user.followings.push(userId.id);
       }
+      setFollowed(!followed);
     } catch (err) {
       console.log(err);
     }
-    setFollowed(!followed);
   };
+
+  useEffect(() => {
+    setFollowed(currentUser?.followings?.includes(userId.id!));
+  }, [currentUser, userId.id]);
+
+  // ... rest of the code ...
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;

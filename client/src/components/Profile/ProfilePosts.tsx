@@ -1,4 +1,3 @@
-import UnfoldMoreOutlinedIcon from "@mui/icons-material/UnfoldMoreOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import GradeOutlinedIcon from "@mui/icons-material/GradeOutlined";
 import { Link } from "react-router-dom";
@@ -12,11 +11,15 @@ import {
   CommentResponse,
   PostResponse,
 } from "../Timeline/useTimeline";
+import { NewPost } from "../PostInput/Post";
 
 export default function ProfilePosts({ post }: { post: PostResponse }) {
   const [likes, setLikes] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const commentRef = useRef<HTMLInputElement>(null);
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedContent, setEditedContent] = useState(post.content);
 
   const { user, loading, error } = useAuthorDetails({ userId: post.userId });
 
@@ -50,7 +53,62 @@ export default function ProfilePosts({ post }: { post: PostResponse }) {
             <span className="username">{user.username}</span>
             <span className="post-date">{format(post.createdAt)}</span>
           </div>
-          <UnfoldMoreOutlinedIcon className="more-icon" />
+          <div className="action-buttons-userProfile">
+            {post.userId === currentUser._id && !isEditing && (
+              <button className="edit-post" onClick={() => setIsEditing(true)}>
+                Edit
+              </button>
+            )}
+            {post.userId === currentUser._id && (
+              <button
+                className="delete-post"
+                onClick={async () => {
+                  try {
+                    const Client = new ClientAPI<id, never>(
+                      `/posts/${post._id}/delete`
+                    );
+                    await Client.deletePost({ userId: currentUser._id });
+                  } catch (err) {
+                    console.log(err);
+                  }
+                }}
+              >
+                Delete
+              </button>
+            )}
+          </div>
+          {isEditing && (
+            <form
+              className="edit-post-form"
+              onSubmit={async (e) => {
+                e.preventDefault();
+                try {
+                  const Client = new ClientAPI<NewPost, PostResponse>(
+                    `/posts/${post._id}`
+                  );
+                  await Client.updatePost({
+                    userId: currentUser._id,
+                    content: editedContent,
+                  });
+                  setIsEditing(false);
+                } catch (err) {
+                  console.log(err);
+                }
+              }}
+            >
+              <input
+                type="text"
+                required
+                maxLength={1000}
+                value={editedContent}
+                onChange={(e) => setEditedContent(e.target.value)}
+              />
+              <button type="submit">Save</button>
+              <button type="button" onClick={() => setIsEditing(false)}>
+                Cancel
+              </button>
+            </form>
+          )}
         </div>
         <div className="body">
           <div className="post-content">{post.content}</div>

@@ -5,10 +5,9 @@ import ProfilePosts from "./ProfilePosts";
 export default function Median() {
   const userId = useParams();
   const { timeline, isLoading, isError } = useUserPosts({ userId: userId.id! });
-  console.log(timeline);
   return (
     <div className="personalPage-group">
-      {isLoading && <div>isLoading...</div>}
+      {isLoading && <div>Loading...</div>}
       {isError && <div>{isError}</div>}
       {!isLoading && !isError && timeline.length === 0 && <div>No posts</div>}
       {!isLoading &&
