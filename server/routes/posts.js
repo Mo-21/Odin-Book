@@ -5,6 +5,7 @@ require("../middlewares/passport-config")(passport);
 
 const Post = require("../models/Post");
 const { User } = require("../models/User");
+const { Comment } = require("../models/Comment");
 
 // Create a Post
 router.post("/", async (req, res) => {
@@ -85,7 +86,15 @@ router.get("/:id", async (req, res) => {
 router.get("/profile/:id", async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
-    const posts = await Post.find({ userId: user._id });
+    const posts = await Post.find({ userId: user._id }).populate({
+      path: "comments",
+      model: Comment,
+      populate: {
+        path: "userId",
+        model: User,
+        select: "username profilePicture _id",
+      },
+    });
     res.status(200).json(posts);
   } catch (err) {
     res.status(500).json(err.message);
@@ -96,10 +105,26 @@ router.get("/profile/:id", async (req, res) => {
 router.get("/timeline/:id", async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
-    const postsFromUser = await Post.find({ userId: user._id });
+    const postsFromUser = await Post.find({ userId: user._id }).populate({
+      path: "comments",
+      model: Comment,
+      populate: {
+        path: "userId",
+        model: User,
+        select: "username profilePicture _id",
+      },
+    });
     const postsFromFollowers = await Promise.all(
       user.followings.map((followingId) => {
-        return Post.find({ userId: followingId });
+        return Post.find({ userId: followingId }).populate({
+          path: "comments",
+          model: Comment,
+          populate: {
+            path: "userId",
+            model: User,
+            select: "username profilePicture -_id",
+          },
+        });
       })
     );
     res.status(200).json(postsFromUser.concat(...postsFromFollowers));
