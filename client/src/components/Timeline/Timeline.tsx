@@ -1,5 +1,4 @@
 import "./Timeline.css";
-import UnfoldMoreOutlinedIcon from "@mui/icons-material/UnfoldMoreOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import GradeOutlinedIcon from "@mui/icons-material/GradeOutlined";
 import { CommentRequest, CommentResponse, PostResponse } from "./useTimeline";
@@ -9,11 +8,14 @@ import { format } from "timeago.js";
 import { useEffect, useRef, useState } from "react";
 import ClientAPI from "../ClientAPI";
 import useAuth from "../Login/useAuth";
+import { NewPost } from "../PostInput/Post";
 
 export default function Timeline({ post }: { post: PostResponse }) {
   const [likes, setLikes] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const commentRef = useRef<HTMLInputElement>(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedContent, setEditedContent] = useState(post.content);
 
   const { user, loading, error } = useAuthorDetails({ userId: post.userId });
   const currentUser = useAuth();
@@ -46,7 +48,50 @@ export default function Timeline({ post }: { post: PostResponse }) {
             <span className="username">{user.username}</span>
             <span className="post-date">{format(post.createdAt)}</span>
           </div>
-          <UnfoldMoreOutlinedIcon className="more-icon" />
+          {post.userId === currentUser._id && !isEditing && (
+            <button className="edit-post" onClick={() => setIsEditing(true)}>
+              Edit
+            </button>
+          )}
+          {isEditing && (
+            <form
+              className="edit-post-form"
+              onSubmit={async (e) => {
+                e.preventDefault();
+                try {
+                  const Client = new ClientAPI<NewPost, PostResponse>(
+                    `/posts/${post._id}`
+                  );
+                  await Client.updatePost({
+                    userId: currentUser._id,
+                    content: editedContent,
+                  });
+                  setIsEditing(false);
+                } catch (err) {
+                  console.log(err);
+                }
+              }}
+            >
+              <input
+                type="text"
+                required
+                maxLength={1000}
+                className="edit-post-input"
+                value={editedContent}
+                onChange={(e) => setEditedContent(e.target.value)}
+              />
+              <button className="save-changes-btn" type="submit">
+                Save
+              </button>
+              <button
+                className="cancel-changes-btn"
+                type="button"
+                onClick={() => setIsEditing(false)}
+              >
+                Cancel
+              </button>
+            </form>
+          )}
         </div>
         <div className="body">
           <div className="post-content">{post.content}</div>
@@ -56,7 +101,7 @@ export default function Timeline({ post }: { post: PostResponse }) {
           <div className="rate">
             <GradeOutlinedIcon
               titleAccess="star"
-              className="post-interaction-icon"
+              className="post-interaction-star"
             />
           </div>
           <div className="like">

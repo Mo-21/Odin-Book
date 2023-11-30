@@ -52,7 +52,6 @@ const useTimeline = () => {
       );
       try {
         const data = await Client.getTimeline();
-        console.log(data);
         setTimeline(
           data.sort((p1, p2) => {
             return (
