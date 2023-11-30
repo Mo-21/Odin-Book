@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import useAuthorDetails from "../Timeline/useAuthorDetails";
 import useFriends from "./useFriends";
 import useAuth from "../Login/useAuth";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import ClientAPI from "../ClientAPI";
 
 export default function Profile() {
@@ -14,6 +14,17 @@ export default function Profile() {
   const [followed, setFollowed] = useState(
     currentUser?.followings?.includes(userId.id!)
   );
+
+  //bio edit
+  const [isEditing, setIsEditing] = useState(false);
+  const [newBio, setNewBio] = useState(user.bio);
+  const handleBioChange = async (event: FormEvent) => {
+    event.preventDefault();
+    const Client = new ClientAPI(`/users/${currentUser._id}`);
+    await Client.updateProfile({ bio: newBio, userId: currentUser._id });
+    user.bio = newBio;
+    setIsEditing(false);
+  };
 
   // handle follow
   const handleFollow = async () => {
@@ -37,8 +48,6 @@ export default function Profile() {
   useEffect(() => {
     setFollowed(currentUser?.followings?.includes(userId.id!));
   }, [currentUser, userId.id]);
-
-  // ... rest of the code ...
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
@@ -71,7 +80,30 @@ export default function Profile() {
           </div>
           <div className="user-info">
             <div className="user-name">{user.username}</div>
-            <div className="user-bio">{user.bio}</div>
+            <div className="user-bio">
+              {currentUser?._id === userId.id && !isEditing && (
+                <>
+                  {user.bio}
+                  <button
+                    className="edit-bio-btn"
+                    onClick={() => setIsEditing(true)}
+                  >
+                    Edit
+                  </button>
+                </>
+              )}
+              {isEditing && (
+                <form className="bio-form" onSubmit={handleBioChange}>
+                  <input
+                    className="bio-input"
+                    type="text"
+                    value={newBio}
+                    onChange={(e) => setNewBio(e.target.value)}
+                    onBlur={handleBioChange}
+                  />
+                </form>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -105,19 +137,23 @@ export default function Profile() {
             </div>
           ))}
         <div className="users-followers">
-          {friends.map((friend) => (
-            <div key={friend._id} className="user-follower">
-              <Link
-                style={{ textDecoration: "none", color: "white" }}
-                to={`/profile/${friend._id}`}
-              >
-                <div className="follower-picture">
-                  <img src={PF + friend.profilePicture} alt="woman" />
-                </div>
-                <div className="follower-name">{friend.username}</div>
-              </Link>
-            </div>
-          ))}
+          {friends.length > 0 ? (
+            friends.map((friend) => (
+              <div key={friend._id} className="user-follower">
+                <Link
+                  style={{ textDecoration: "none", color: "white" }}
+                  to={`/profile/${friend._id}`}
+                >
+                  <div className="follower-picture">
+                    <img src={PF + friend.profilePicture} alt="woman" />
+                  </div>
+                  <div className="follower-name">{friend.username}</div>
+                </Link>
+              </div>
+            ))
+          ) : (
+            <div>No followings</div>
+          )}
         </div>
       </div>
     </div>
