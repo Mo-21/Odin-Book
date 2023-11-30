@@ -8,7 +8,6 @@ export default function App() {
     const userDetails = localStorage.getItem("userDetails");
     if (userDetails) {
       const user = JSON.parse(userDetails);
-      console.log(user);
       if (user) {
         navigate(`/${user._id}`);
       } else {
