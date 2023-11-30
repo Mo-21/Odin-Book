@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import ClientAPI from "../ClientAPI";
 import { ConversationResponse } from "../Messenger/Messenger";
 import { User } from "../Timeline/useAuthorDetails";
+import axios from "axios";
 
 interface ConversationProps {
   conversation: ConversationResponse;
@@ -26,7 +27,12 @@ export default function Conversation({
         const response = await Client.getUser();
         setUser(response);
       } catch (err) {
-        console.log(err);
+        if (axios.isAxiosError(err)) {
+          // Now TypeScript knows that err is an AxiosError
+          console.error("Server Error:", err.response?.data);
+        } else {
+          console.error("Error:", err);
+        }
       }
     };
     getUser();
