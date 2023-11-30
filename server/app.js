@@ -109,6 +109,8 @@ app.use("/api/users", require("./routes/users"));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/posts", require("./routes/posts"));
 app.use("/api/comments", require("./routes/comments"));
+app.use("/api/conversations", require("./routes/conversations"));
+app.use("/api/messages", require("./routes/messages"));
 
 // Serve static assets in production
 app.listen(process.env.PORT || 3000, () => {
