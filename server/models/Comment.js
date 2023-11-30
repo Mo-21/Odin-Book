@@ -2,22 +2,27 @@ const mongoose = require("mongoose");
 const Joi = require("joi");
 
 const Schema = mongoose.Schema;
-const commentSchema = new Schema({
-  userId: {
-    type: String,
-    required: true,
+const commentSchema = new Schema(
+  {
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    postId: {
+      type: Schema.Types.ObjectId,
+      ref: "Post",
+      required: true,
+    },
+    content: {
+      type: String,
+      required: true,
+      minlength: 1,
+      maxlength: 600,
+    },
   },
-  postId: {
-    type: String,
-    required: true,
-  },
-  content: {
-    type: String,
-    required: true,
-    minlength: 1,
-    maxlength: 600,
-  },
-});
+  { timestamps: true }
+);
 
 const Comment = mongoose.model("Comment", commentSchema);
 
