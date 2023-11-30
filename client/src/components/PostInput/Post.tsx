@@ -113,11 +113,35 @@ export default function Post() {
             />
           </label>
         </div>
-        <div className="hashtag">
+        <div
+          onClick={() => {
+            if (status && status.current) {
+              if (status.current.value === null) {
+                status.current.value = "#";
+              } else {
+                status.current.value += "#";
+              }
+              status.current.focus();
+            }
+          }}
+          className="hashtag"
+        >
           <TagOutlinedIcon className="action-icon" />
           <span className="hashtag-text">Hashtag</span>
         </div>
-        <div className="mention">
+        <div
+          onClick={() => {
+            if (status && status.current) {
+              if (status.current.value === null) {
+                status.current.value = "@";
+              } else {
+                status.current.value += "@";
+              }
+              status.current.focus();
+            }
+          }}
+          className="mention"
+        >
           <AlternateEmailOutlinedIcon className="action-icon" />
           <span className="mention-text">Mention</span>
         </div>
