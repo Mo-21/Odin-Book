@@ -27,8 +27,10 @@ export default function Topbar() {
       </div>
       <div className="icons-links">
         <Person titleAccess="Profile" />
-        <Message titleAccess="Messenger" />
         <Notifications titleAccess="Notifications" />
+        <Link className="links" to={"/messenger"}>
+          <Message titleAccess="Messenger" />
+        </Link>
       </div>
       <div className="right-side">
         <div className="user-profile">
