@@ -1,21 +1,25 @@
-import "./Timeline.css";
 import UnfoldMoreOutlinedIcon from "@mui/icons-material/UnfoldMoreOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import GradeOutlinedIcon from "@mui/icons-material/GradeOutlined";
-import { CommentRequest, CommentResponse, PostResponse } from "./useTimeline";
-import useAuthorDetails, { id } from "./useAuthorDetails";
 import { Link } from "react-router-dom";
 import { format } from "timeago.js";
 import { useEffect, useRef, useState } from "react";
 import ClientAPI from "../ClientAPI";
 import useAuth from "../Login/useAuth";
+import useAuthorDetails, { id } from "../Timeline/useAuthorDetails";
+import {
+  CommentRequest,
+  CommentResponse,
+  PostResponse,
+} from "../Timeline/useTimeline";
 
-export default function Timeline({ post }: { post: PostResponse }) {
+export default function ProfilePosts({ post }: { post: PostResponse }) {
   const [likes, setLikes] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const commentRef = useRef<HTMLInputElement>(null);
 
   const { user, loading, error } = useAuthorDetails({ userId: post.userId });
+
   const currentUser = useAuth();
 
   useEffect(() => {

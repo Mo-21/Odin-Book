@@ -1,8 +1,33 @@
-.profilePage-container {
+.profile-page-ultimate-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100vh;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.personalPage-group {
+  flex: 2;
+  margin: 20px 20px;
+  max-height: 100vh;
+  display: flex;
+  padding-bottom: 100px;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.profilePage-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 .users-profile-info {
@@ -38,13 +63,6 @@
   object-fit: cover;
 }
 
-.user-personal-info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 75px;
-}
-
 .user-info {
   display: flex;
   flex-direction: column;
@@ -78,19 +96,28 @@
 }
 
 .users-profile-activity {
+  background: #333;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 20px 0;
+  width: 60%;
+}
+
+.users-followers {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top: 20px;
-  height: 100vh;
-  overflow-x: hidden;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  background-color: #333;
+  color: #ddd;
 }
 
 .user-posts {
   flex: 1;
   margin: 0 20px;
   height: 100%;
-  overflow-y: auto;
   padding: 20px;
 }
 
@@ -110,22 +137,15 @@
   box-shadow: 0px 0px 16px 6px rgba(0, 0, 0, 0.28);
 }
 
-.users-followers {
-  line-height: 25px;
-  font-size: 1.3rem;
-  background-color: #333;
-  color: #ddd;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 16px 6px rgba(0, 0, 0, 0.28);
-}
-
 .user-follower {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 10px;
-  margin-top: 20px;
+  justify-content: center;
+  padding: 10px;
+  background: #888;
+  color: #333;
+  border-radius: 5px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
 }
 
 .follower-picture img {
@@ -162,33 +182,124 @@
   margin-left: 10px;
 }
 
-@media (max-width: 700px) {
-  .users-profile-activity {
-    flex-direction: column;
-    padding: 10px;
+.user-follower a {
+  text-decoration: none;
+  color: #333;
+  display: flex;
+  align-items: center;
+}
+
+.follower-picture {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.follower-picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.follower-name {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+/* Profile.css */
+
+/* ... existing styles ... */
+
+@media (max-width: 1200px) {
+  .profile-picture-profile {
+    width: 200px;
+    height: 200px;
   }
-  .user-posts {
-    margin: 20px 0;
+
+  .user-info {
+    font-size: 1.8rem;
   }
+
+  .user-name {
+    font-size: 2.2rem;
+  }
+
+  .profile-page-ultimate-container {
+    overflow: auto;
+  }
+}
+
+@media (max-width: 992px) {
   .profile-picture-profile {
     width: 150px;
     height: 150px;
-    top: 60%;
   }
+
   .user-info {
     font-size: 1.6rem;
   }
-  .user-personal-info {
-    margin-top: 20px;
+
+  .user-name {
+    font-size: 2rem;
   }
-  .users-basic-info,
-  .users-followers {
-    width: 100%;
+
+  .users-profile-activity {
+    width: 80%;
   }
-  .information {
-    display: none;
+
+  .profile-page-ultimate-container {
+    overflow: auto;
   }
-  .user-follower {
-    display: none;
+}
+
+@media (max-width: 768px) {
+  .profile-picture-profile {
+    width: 100px;
+    height: 100px;
+  }
+
+  .user-info {
+    font-size: 1.4rem;
+  }
+
+  .user-name {
+    font-size: 1.8rem;
+  }
+
+  .users-profile-activity {
+    width: 90%;
+  }
+
+  .profile-page-ultimate-container {
+    overflow: auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .profile-picture-profile {
+    width: 80px;
+    height: 80px;
+  }
+
+  .user-info {
+    font-size: 1.2rem;
+  }
+
+  .user-name {
+    font-size: 1.6rem;
+  }
+
+  .users-profile-activity {
+    width: 90%;
+  }
+
+  .profile-page-ultimate-container {
+    overflow: auto;
+  }
+
+  .profilePage-container {
+    overflow: auto;
   }
 }

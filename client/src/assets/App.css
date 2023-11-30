@@ -72,4 +72,7 @@ html {
     padding: 0 20px;
     padding-bottom: 200px;
   }
+  html {
+    overflow-y: auto;
+  }
 }

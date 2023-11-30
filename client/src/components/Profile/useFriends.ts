@@ -14,7 +14,6 @@ const useFriends = ({ userId }: id) => {
   const [isLoading, setLoading] = useState(true);
   const [isError, setError] = useState<string | null>(null);
 
-  console.log(userId);
   useEffect(() => {
     const Client = new ClientAPI<UserId, FriendsList[]>(
       `users/friends/${userId}`
@@ -22,7 +21,7 @@ const useFriends = ({ userId }: id) => {
     const fetchFriends = async () => {
       try {
         const data = await Client.fetchFriends();
-        console.log(data);
+        
         setFriendsList(data);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: Error | any) {

@@ -1,10 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
 import Home from "./pages/Home";
-import Profile from "./Profile/Profile";
 import Login from "./Login/Login";
 import Register from "./Register/Register";
 import App from "./pages/App";
 import { Logout } from "@mui/icons-material";
+import PersonalProfile from "./pages/PersonalProfile";
 
 const router = createBrowserRouter([
   {
@@ -17,7 +17,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/profile/:id",
-        element: <Profile />,
+        element: <PersonalProfile />,
       },
     ],
   },
