@@ -2,18 +2,21 @@ import "./Timeline.css";
 import UnfoldMoreOutlinedIcon from "@mui/icons-material/UnfoldMoreOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import GradeOutlinedIcon from "@mui/icons-material/GradeOutlined";
-import { PostResponse } from "./useTimeline";
+import { CommentRequest, CommentResponse, PostResponse } from "./useTimeline";
 import useAuthorDetails, { id } from "./useAuthorDetails";
 import { Link } from "react-router-dom";
 import { format } from "timeago.js";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ClientAPI from "../ClientAPI";
+import useAuth from "../Login/useAuth";
 
 export default function Timeline({ post }: { post: PostResponse }) {
   const [likes, setLikes] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
+  const commentRef = useRef<HTMLInputElement>(null);
 
   const { user, loading, error } = useAuthorDetails({ userId: post.userId });
+  const currentUser = useAuth();
 
   useEffect(() => {
     setIsLiked(post.likes.includes(user._id));
@@ -78,10 +81,87 @@ export default function Timeline({ post }: { post: PostResponse }) {
           </div>
           <div className="comments">
             <span className="comment-counter">
-              {post.comments.toString() ? post.comments.toString() : 0} comments
+              {post.comments.length > 0 ? post.comments.length : 0} comments
             </span>
             <hr />
           </div>
+        </div>
+        <div className="comment-action">
+          {post.comments &&
+            post.comments.map((comment) => {
+              return (
+                <div key={comment._id} className="comment">
+                  <div className="comment-author">
+                    <img
+                      src={PF + comment.userId.profilePicture}
+                      className="comment-author-img"
+                      alt="profilePicture"
+                    />
+                    <span className="comment-username">
+                      {comment.userId?.username}
+                    </span>
+                    {post.userId === currentUser._id ||
+                    currentUser._id === user._id ||
+                    comment.userId._id === currentUser._id ? (
+                      <div className="delete-comment">
+                        <button
+                          onClick={async (e) => {
+                            e.preventDefault();
+
+                            try {
+                              const Client = new ClientAPI<
+                                CommentRequest,
+                                never
+                              >(`comments/${comment._id}`);
+                              const res = await Client.deleteComment({
+                                userId: currentUser._id,
+                                content: comment.content,
+                                postId: post._id,
+                              });
+                              console.log(res);
+                            } catch (err) {
+                              console.log(err);
+                            }
+                          }}
+                          className="delete-comment-btn"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <div className="comment-content">{comment.content}</div>
+                </div>
+              );
+            })}
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault();
+              try {
+                const Client = new ClientAPI<id, CommentResponse>(`/comments`);
+                if (!commentRef.current?.value) return;
+                await Client.commentPost({
+                  userId: currentUser._id,
+                });
+              } catch (err) {
+                console.log(err);
+              }
+              commentRef.current!.value = "";
+            }}
+            className="send-comment"
+          >
+            <input
+              className="comment-input"
+              type="text"
+              placeholder="Comment"
+              ref={commentRef}
+            />
+            <button type="submit" className="submit-comment">
+              Submit
+            </button>
+          </form>
         </div>
       </div>
     </div>
