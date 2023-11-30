@@ -2,13 +2,34 @@ import { useEffect, useState } from "react";
 import ClientAPI from "../ClientAPI";
 import useAuth from "../Login/useAuth";
 
+interface CommentAuthor {
+  _id: string;
+  username: string;
+  profilePicture: string;
+}
+
+export interface CommentResponse {
+  _id: string;
+  userId: CommentAuthor;
+  postId: string;
+  content: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface CommentRequest {
+  userId: string;
+  postId: string;
+  content: string;
+}
+
 export interface PostResponse {
   _id: string;
   userId: string;
   content: string;
   img: string;
   likes: Array<string>;
-  comments: Array<string>;
+  comments: Array<CommentResponse>;
   createdAt: Date;
   updatedAt: Date;
 }
