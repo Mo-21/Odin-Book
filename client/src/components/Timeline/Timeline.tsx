@@ -34,7 +34,7 @@ export default function Timeline({ post }: { post: PostResponse }) {
       <div className="post-container">
         <div className="user-details">
           <div className="author-details">
-            <Link to={`profile/${user._id}`}>
+            <Link to={`/profile/${user._id}`}>
               <img
                 src={
                   PF +
