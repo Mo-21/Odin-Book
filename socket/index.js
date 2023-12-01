@@ -1,6 +1,6 @@
-const io = require("socket.io")(4000, {
+const io = require("socket.io")(process.env.PORT || 4000, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: process.env.CORS_ORIGIN || "http://localhost:5173",
   },
 });
 
