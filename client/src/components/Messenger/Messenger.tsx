@@ -74,8 +74,7 @@ export default function Messenger() {
 
   useEffect(() => {
     socket.current.emit("addUser", currentUser._id);
-    //@ts-ignore
-    socket.current.on("getUsers", () => (users) => {
+    socket.current.on("getUsers", (users) => {
       return console.log(users);
     });
   }, [currentUser]);
