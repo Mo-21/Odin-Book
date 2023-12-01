@@ -4,6 +4,7 @@ import ClientAPI from "../ClientAPI";
 import { ConversationResponse } from "../Messenger/Messenger";
 import { User } from "../Timeline/useAuthorDetails";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 interface ConversationProps {
   conversation: ConversationResponse;
@@ -38,13 +39,17 @@ export default function Conversation({
     getUser();
   }, [currentUser, conversation]);
   return (
-    <div className="conversation">
-      <img
-        className="conversation-profileImage"
-        src={PF + (user?.profilePicture ? user.profilePicture : "/default.png")}
-        alt="profileImage"
-      />
-      <span className="conversation-user">{user?.username}</span>
-    </div>
+    <Link to={`/profile${user?._id}`}>
+      <div className="conversation">
+        <img
+          className="conversation-profileImage"
+          src={
+            PF + (user?.profilePicture ? user.profilePicture : "/default.png")
+          }
+          alt="profileImage"
+        />
+        <span className="conversation-user">{user?.username}</span>
+      </div>
+    </Link>
   );
 }
