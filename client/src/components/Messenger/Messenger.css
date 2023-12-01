@@ -53,6 +53,8 @@
 
 .chat-box-bottom {
   margin-top: 5px;
+  margin-bottom: 20px;
+  gap: 3px;
   display: flex;
   align-items: center;
   justify-content: space-between;
