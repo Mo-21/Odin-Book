@@ -5,6 +5,7 @@ import useFriends from "./useFriends";
 import useAuth from "../Login/useAuth";
 import { FormEvent, useEffect, useState } from "react";
 import ClientAPI from "../ClientAPI";
+import axios from "axios";
 
 export default function Profile() {
   const userId = useParams();
@@ -15,6 +16,81 @@ export default function Profile() {
     currentUser?.followings?.includes(userId.id!)
   );
 
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedCoverFile, setSelectedCoverFile] = useState<File | null>(null);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      setSelectedFile(event.target.files[0]);
+    }
+  };
+
+  const handleCoverFileChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (event.target.files && event.target.files[0]) {
+      setSelectedCoverFile(event.target.files[0]);
+    }
+  };
+
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const newImage = {
+      userId: currentUser?._id,
+      profilePicture: currentUser?.profilePicture,
+      coverPicture: currentUser?.coverPicture,
+    };
+
+    if (selectedFile) {
+      const data = new FormData();
+      const fileName = Date.now() + selectedFile.name;
+      data.append("name", fileName);
+      data.append("file", selectedFile);
+      newImage.profilePicture = fileName;
+
+      try {
+        const response = await axios.put(
+          `/api/profilePicture/${currentUser._id}`,
+          data
+        );
+        console.log(response.data);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    if (selectedCoverFile) {
+      const data = new FormData();
+      const fileName = Date.now() + selectedCoverFile.name;
+      data.append("name", fileName);
+      data.append("file", selectedCoverFile);
+      newImage.coverPicture = fileName;
+
+      try {
+        const response = await axios.put(
+          `/api/coverPicture/${currentUser._id}`,
+          data
+        );
+        console.log(response.data);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    try {
+      const Client = new ClientAPI(`/users/${currentUser._id}`);
+      await Client.updateProfile({
+        profilePicture: newImage.profilePicture,
+        coverPicture: newImage.coverPicture,
+        userId: currentUser._id,
+      });
+      user.profilePicture = newImage.profilePicture;
+      user.coverPicture = newImage.coverPicture;
+    } catch (err) {
+      console.error(err);
+    }
+  };
   //bio edit
   const [isEditing, setIsEditing] = useState(false);
   const [newBio, setNewBio] = useState(user.bio);
@@ -88,7 +164,7 @@ export default function Profile() {
                     className="edit-bio-btn"
                     onClick={() => setIsEditing(true)}
                   >
-                    Edit
+                    Edit Bio
                   </button>
                 </>
               )}
@@ -104,6 +180,18 @@ export default function Profile() {
                 </form>
               )}
             </div>
+            {currentUser?._id === userId.id && (
+              <form className="profile-update-form" onSubmit={handleFormSubmit}>
+                <input required type="file" onChange={handleCoverFileChange} />
+                <button type="submit">Update Cover Picture</button>
+              </form>
+            )}
+            {currentUser?._id === userId.id && (
+              <form className="profile-update-form" onSubmit={handleFormSubmit}>
+                <input required type="file" onChange={handleFileChange} />
+                <button type="submit">Update Profile Picture</button>
+              </form>
+            )}
           </div>
         </div>
       </div>

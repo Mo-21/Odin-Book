@@ -48,7 +48,7 @@
 
 .profile-picture-profile {
   position: absolute;
-  top: 70%;
+  top: 30%;
   left: 50%;
   transform: translate(-50%, -70%);
   width: 250px;
@@ -231,6 +231,38 @@
   border-radius: 5px;
 }
 
+.profile-update-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-update-form input[type="file"] {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+}
+
+.profile-update-form button {
+  padding: 5px 10px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.user-bio {
+  text-align: center;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
 @media (max-width: 1200px) {
   .profile-picture-profile {
     width: 200px;
@@ -275,8 +307,14 @@
 
 @media (max-width: 768px) {
   .profile-picture-profile {
-    width: 100px;
-    height: 100px;
+    top: 25%;
+    width: 150px;
+    height: 150px;
+  }
+
+  .users-followers {
+    flex-direction: column;
+    gap: 20px;
   }
 
   .user-info {
@@ -288,7 +326,7 @@
   }
 
   .users-profile-activity {
-    width: 90%;
+    width: 227px !important;
   }
 
   .profile-page-ultimate-container {
