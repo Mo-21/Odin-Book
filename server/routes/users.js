@@ -115,4 +115,35 @@ router.get("/friends/:userId", async (req, res) => {
   }
 });
 
+//Get All Users
+router.get("/allUsers/:userId", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    const followings = await Promise.all(
+      user.followings.map((friendId) => {
+        return User.findById(friendId);
+      })
+    );
+    const followers = await Promise.all(
+      user.followers.map((friendId) => {
+        return User.findById(friendId);
+      })
+    );
+    let friendList = [];
+    followings.map((friend) => {
+      const { _id, username, profilePicture } = friend;
+      friendList.push({ _id, username, profilePicture });
+    });
+    followers.map((friend) => {
+      const { _id, username, profilePicture } = friend;
+      if (!friendList.some((f) => f._id.toString() === _id.toString())) {
+        friendList.push({ _id, username, profilePicture });
+      }
+    });
+    res.status(200).json(friendList);
+  } catch (err) {
+    res.status(500).json(err.message);
+  }
+});
+
 module.exports = router;
