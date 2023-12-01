@@ -10,7 +10,6 @@ interface MessageProps {
 
 export default function Message({ message, own }: MessageProps) {
   const currentUser = useAuth();
-  console.log(message);
   const PF = import.meta.env.VITE_PUBLIC_FOLDER;
   return (
     <div className={own ? "message own" : "message"}>
