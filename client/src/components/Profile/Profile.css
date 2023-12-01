@@ -3,8 +3,6 @@
   flex-direction: column;
   align-items: center;
   height: 100vh;
-  overflow-y: hidden;
-  overflow-x: hidden;
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
 }
@@ -17,8 +15,6 @@
   padding-bottom: 100px;
   flex-direction: column;
   align-items: center;
-  overflow-y: auto;
-  overflow-x: hidden;
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
 }
@@ -299,10 +295,6 @@
   .users-profile-activity {
     width: 80%;
   }
-
-  .profile-page-ultimate-container {
-    overflow: auto;
-  }
 }
 
 @media (max-width: 768px) {
@@ -329,9 +321,6 @@
     width: 227px !important;
   }
 
-  .profile-page-ultimate-container {
-    overflow: auto;
-  }
   .cover-picture-img {
     width: 100%;
     height: 20%;
@@ -355,13 +344,5 @@
 
   .users-profile-activity {
     width: 90%;
-  }
-
-  .profile-page-ultimate-container {
-    overflow: auto;
-  }
-
-  .profilePage-container {
-    overflow: auto;
   }
 }
