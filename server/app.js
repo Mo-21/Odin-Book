@@ -19,6 +19,7 @@ const { User } = require("./models/User");
 
 const app = express();
 
+app.use(express.static("dist"));
 //MongoDB connection
 mongoose.connect(process.env.DATABASE_URL);
 const db = mongoose.connection;
@@ -55,9 +56,8 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
   try {
-    await User.findById(id, (err, user) => {
-      done(err, user);
-    });
+    const user = await User.findById(id);
+    done(null, user);
   } catch (err) {
     done(err);
   }
