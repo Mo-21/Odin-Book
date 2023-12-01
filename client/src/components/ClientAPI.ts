@@ -23,9 +23,13 @@ class ClientAPI<T, R> {
     return axiosInstance.get<R>(this.endpoint).then((res) => res.data);
   };
 
+  getAllUser = () => {
+    return axiosInstance.get<R>(this.endpoint).then((res) => res.data);
+  };
+
   updateProfile = (data: T) => {
     return axiosInstance.put(this.endpoint, data).then((res) => res.data);
-  }
+  };
 
   likePost = (data: T) => {
     return axiosInstance.put(this.endpoint, data).then((res) => res.data);
