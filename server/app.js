@@ -104,6 +104,22 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
   }
 });
 
+app.put("/api/profilePicture/:id", upload.single("file"), async (req, res) => {
+  try {
+    return res.status(200).json("File uploaded successfully");
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+app.put("/api/coverPicture/:id", upload.single("file"), async (req, res) => {
+  try {
+    return res.status(200).json("File uploaded successfully");
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 // Routes
 app.use("/api/users", require("./routes/users"));
 app.use("/api/auth", require("./routes/auth"));
