@@ -14,10 +14,12 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const multer = require("multer");
 const path = require("path");
+const http = require("http");
 
 const { User } = require("./models/User");
 
 const app = express();
+const server = http.createServer(app);
 
 app.use(express.static("dist"));
 //MongoDB connection
@@ -129,6 +131,8 @@ app.use("/api/conversations", require("./routes/conversations"));
 app.use("/api/messages", require("./routes/messages"));
 
 // Serve static assets in production
-app.listen(process.env.PORT || 3000, () => {
-  console.log(`Listening on port ${process.env.PORT || 3000}`);
+server.listen(process.env.PORT, () => {
+  console.log(`Listening on port ${process.env.PORT}`);
 });
+
+module.exports = app;
