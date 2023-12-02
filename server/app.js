@@ -80,7 +80,7 @@ app.use(logger("dev"));
 app.use(helmet());
 app.use(
   session({
-    secret: "cats",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
   })
