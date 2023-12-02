@@ -1,7 +1,7 @@
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
-const cors = require("cors");
+const createError = require("http-errors");
 const express = require("express");
 const morgan = require("morgan");
 const logger = require("morgan");
@@ -14,11 +14,13 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const multer = require("multer");
 const path = require("path");
-const http = require("http");
+http = require("http");
 
 const { User } = require("./models/User");
 
 const app = express();
+const cors = require("cors");
+app.use(cors());
 const server = http.createServer(app);
 
 app.use(express.static("dist"));
@@ -129,6 +131,17 @@ app.use("/api/posts", require("./routes/posts"));
 app.use("/api/comments", require("./routes/comments"));
 app.use("/api/conversations", require("./routes/conversations"));
 app.use("/api/messages", require("./routes/messages"));
+
+// error handler
+app.use(function (err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get("env") === "development" ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render("error");
+});
 
 // Serve static assets in production
 server.listen(process.env.PORT, () => {
