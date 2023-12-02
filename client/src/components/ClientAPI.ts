@@ -1,7 +1,27 @@
 import axios from "axios";
 
-const axiosInstance = axios.create({
-  baseURL: "/api",
+const axiosInstanceLogin = axios.create({
+  baseURL: "/api/auth",
+});
+
+const axiosInstanceUsers = axios.create({
+  baseURL: "/api/users",
+});
+
+const axiosInstancePosts = axios.create({
+  baseURL: "/api/posts",
+});
+
+const axiosInstanceComments = axios.create({
+  baseURL: "/api/comments",
+});
+
+const axiosInstanceConversations = axios.create({
+  baseURL: "/api/conversations",
+});
+
+const axiosInstanceMessages = axios.create({
+  baseURL: "/api/messages",
 });
 
 class ClientAPI<T, R> {
@@ -12,75 +32,85 @@ class ClientAPI<T, R> {
   }
 
   login = (data: T) => {
-    return axiosInstance.post<R>(this.endpoint, data).then((res) => res.data);
+    return axiosInstanceLogin
+      .post<R>(this.endpoint, data)
+      .then((res) => res.data);
   };
 
   getTimeline = () => {
-    return axiosInstance.get<R>(this.endpoint).then((res) => res.data);
+    return axiosInstancePosts.get<R>(this.endpoint).then((res) => res.data);
   };
 
   getUser = () => {
-    return axiosInstance.get<R>(this.endpoint).then((res) => res.data);
+    return axiosInstanceUsers.get<R>(this.endpoint).then((res) => res.data);
   };
 
   getAllUser = () => {
-    return axiosInstance.get<R>(this.endpoint).then((res) => res.data);
+    return axiosInstanceUsers.get<R>(this.endpoint).then((res) => res.data);
   };
 
   updateProfile = (data: T) => {
-    return axiosInstance.put(this.endpoint, data).then((res) => res.data);
+    return axiosInstanceUsers.put(this.endpoint, data).then((res) => res.data);
   };
 
   likePost = (data: T) => {
-    return axiosInstance.put(this.endpoint, data).then((res) => res.data);
+    return axiosInstancePosts.put(this.endpoint, data).then((res) => res.data);
   };
 
   sharePost = (data: T) => {
-    return axiosInstance.post<R>(this.endpoint, data).then((res) => res.data);
+    return axiosInstancePosts
+      .post<R>(this.endpoint, data)
+      .then((res) => res.data);
   };
 
   fetchFriends = () => {
-    return axiosInstance.get<R>(this.endpoint).then((res) => res.data);
+    return axiosInstanceUsers.get<R>(this.endpoint).then((res) => res.data);
   };
 
   followUser = (data: T) => {
-    return axiosInstance.put(this.endpoint, data).then((res) => res.data);
+    return axiosInstanceUsers.put(this.endpoint, data).then((res) => res.data);
   };
 
   unFollowUser = (data: T) => {
-    return axiosInstance.put(this.endpoint, data).then((res) => res.data);
+    return axiosInstanceUsers.put(this.endpoint, data).then((res) => res.data);
   };
 
   commentPost = (data: T) => {
-    return axiosInstance.post<R>(this.endpoint, data).then((res) => res.data);
+    return axiosInstanceComments
+      .post<R>(this.endpoint, data)
+      .then((res) => res.data);
   };
 
   deleteComment = (data: T) => {
-    return axiosInstance
+    return axiosInstanceComments
       .delete(this.endpoint, { data })
       .then((res) => res.data);
   };
 
   updatePost = (data: T) => {
-    return axiosInstance.put(this.endpoint, data).then((res) => res.data);
+    return axiosInstancePosts.put(this.endpoint, data).then((res) => res.data);
   };
 
   deletePost = (data: T) => {
-    return axiosInstance
+    return axiosInstancePosts
       .delete(this.endpoint, { data })
       .then((res) => res.data);
   };
 
   getConversation = () => {
-    return axiosInstance.get<R>(this.endpoint).then((res) => res.data);
+    return axiosInstanceConversations
+      .get<R>(this.endpoint)
+      .then((res) => res.data);
   };
 
   getMessages = () => {
-    return axiosInstance.get<R>(this.endpoint).then((res) => res.data);
+    return axiosInstanceMessages.get<R>(this.endpoint).then((res) => res.data);
   };
 
   sendMessage = (data: T) => {
-    return axiosInstance.post<R>(this.endpoint, data).then((res) => res.data);
+    return axiosInstanceMessages
+      .post<R>(this.endpoint, data)
+      .then((res) => res.data);
   };
 }
 

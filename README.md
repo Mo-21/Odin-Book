@@ -2,6 +2,8 @@
 
 This is a fullstack social media application built using TypeScript, React, Node.js with Express, MongoDB, and Socket.IO for instant messaging.
 
+### [Live Preview](https://odin-book-production-0753.up.railway.app/)
+
 ![overview](./screenshots/gif.gif)
 
 ## Features
